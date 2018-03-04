@@ -40,6 +40,11 @@ const storeSchema = new mongoose.Schema({
    }
 });
 
+// Define your index
+storeSchema.index({
+  name: 'text',
+  description: 'text'
+});
 
 storeSchema.pre('save',async function(next) {
   if(!this.isModified('name')){
@@ -50,10 +55,10 @@ storeSchema.pre('save',async function(next) {
   // find other stores that havea slug of wes, wes-1, wes-2
   const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i');
 
-  const storesWithSLug = await this.constructor.find({ slug: slugRegEx });
+  const storesWithSlug = await this.constructor.find({ slug: slugRegEx });
   
-  if(storeWithSlug.length) {
-    this.slug = `${this.slug}-${storesWithSLug.length + 1}`;
+  if(storesWithSlug.length) {
+    this.slug = `${this.slug}-${storesWithSlug.length + 1}`;
   }
   
   next();
