@@ -54,7 +54,7 @@ storeSchema.pre('save',async function(next) {
     return; // stop this function from running
   }
   this.slug= slug(this.name);
-  // find other stores that havea slug of wes, wes-1, wes-2
+  // find other stores that have a slug of wes, wes-1, wes-2
   const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i');
 
   const storesWithSlug = await this.constructor.find({ slug: slugRegEx });
